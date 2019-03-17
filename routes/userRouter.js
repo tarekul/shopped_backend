@@ -8,10 +8,10 @@ userRouter.get('/:id',(req,res)=>{
     console.log(id)
     return userService.readUser(id)
     .then(response=>{
-        res.json(response)
+        res.status(200).json(response)
     })
     .catch(err=>{
-        res.json({mssg:err.name})
+        res.status(400).json({mssg:err.name})
     })
     res.send(`get user with id: ${id}`)
 })
