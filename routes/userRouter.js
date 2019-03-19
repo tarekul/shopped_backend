@@ -28,7 +28,7 @@ userRouter.post('/',(req,res)=>{
     return userService.createUser(userName,name,email,creditCard,address,state,country,zipCode,shopName,shopDescrip)
     .then(response =>{
         res.status(200)
-        res.json({mssg:'user created'})
+        res.json({mssg:response})
     })
     .catch(err=>{
         res.status(400)
