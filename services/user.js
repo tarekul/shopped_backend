@@ -63,4 +63,4 @@ userService.deleteOrderHistory = (buyer) =>{
 }
 
 
-module.exports = userService;
+module.exports = {userService, db};
