@@ -16,10 +16,9 @@ productRouter.get('/:prod_id',(req,res)=>{
 
 productRouter.post('/',(req,res)=>{
     const {userid,name,description,price,category,ratings,size} = req.body
-    
-    return productService.createUser(userid,name,description,price,category,ratings,size)
+    productService.createProduct(userid,name,description,price,category,ratings,size)
     .then(response =>{
-        res.json(response)
+        res.json({mssg:response})
     })
     .catch(err=>{
         res.json(err)
