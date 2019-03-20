@@ -40,7 +40,7 @@ userRouter.put('/:id',(req,res)=>{
     const {id} = req.params
     const {userName,name,email,creditCard,address,state,zipCode,shopName,shopDescrip} = req.body
     return userService.updateUser(id,userName,name,email,creditCard,address,state,zipCode,shopName,shopDescrip)
-    .then(response=>{
+    .then((response)=>{
         res.json({mssg:'update successful'})
     })
     .catch(err=>{

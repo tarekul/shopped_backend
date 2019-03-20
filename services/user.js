@@ -14,8 +14,10 @@ userService.createUser = (userName,name,email,creditCard,address,state,country,z
 
 userService.updateUser = (id,userName,name,email,creditCard,address,state,country,zipCode,shopName,shopDescrip) =>{
     const arr = [userName,name,email,creditCard,address,state,country,zipCode,shopName,shopDescrip]
+
     const arrString = ["userName","name","email","creditCard","address","state","country","zipCode","shopName","shopDescrip"]
     return db.none(createSqlCommandForUpdate(id,arr,arrString),{id,userName,name,email,creditCard,address,state,country,zipCode,shopName,shopDescrip})
+
 }
 
 userService.deleteUser = (id) =>{
