@@ -7,31 +7,28 @@ CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username VARCHAR (100) UNIQUE NOT NULL,
   name VARCHAR(100) NOT NULL,
+  img json NULL,
   email VARCHAR (100) UNIQUE NOT NULL,
-  creditCard INT NULL,
-  address VARCHAR NULL,
-  country VARCHAR NULL,
-  state VARCHAR NULL,
-  zipCode VARCHAR NULL,
-  shopName VARCHAR (100) NULL,
-  shopDescrip VARCHAR NULL,
+  address json NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
   token VARCHAR NULL
 );
 
--- CREATE TABLE shop (
---   shop_id SERIAL PRIMARY KEY,
---   seller INT REFERENCES users(id) NOT NULL,
---   shop_name VARCHAR (100) NOT NULL,
---   description VARCHAR
--- );
+CREATE TABLE shop (
+  shop_id SERIAL PRIMARY KEY,
+  seller INT REFERENCES users(id) NOT NULL,
+  shop_name VARCHAR (100) NOT NULL,
+  description VARCHAR,
+  img_shop json NULL
+);
 
 CREATE TABLE products (
   prod_id SERIAL PRIMARY KEY,
   userid INT REFERENCES users(id) NOT NULL,
   name VARCHAR (100) NOT NULL,
   description VARCHAR,
+  imgs json NULL,
   price FLOAT(2) NOT NULL,
   category VARCHAR (100) NOT NULL,
   ratings INT NULL,
