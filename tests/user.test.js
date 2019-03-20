@@ -23,6 +23,7 @@ test("test createUser function",()=>{
     })
 })
 
+
 test("test deleteUser function",()=>{
     userService.deleteUser('a').then(data=>{
         expect(data).toBe(undefined)
