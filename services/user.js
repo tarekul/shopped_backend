@@ -1,6 +1,6 @@
 const pgp = require('pg-promise')({})
 const db = pgp('postgress://localhost/shopped')
-
+const {createSqlCommandForUpdate} = require('../services/helper')
 const userService = {}
 
 //users table
@@ -14,24 +14,10 @@ userService.createUser = (userName,name,email,creditCard,address,state,country,z
 
 userService.updateUser = (id,userName,name,email,creditCard,address,state,country,zipCode,shopName,shopDescrip) =>{
     const arr = [userName,name,email,creditCard,address,state,country,zipCode,shopName,shopDescrip]
-    
-    const arrString = ["userName","name","email","creditCard","address","state","country","zipCode","shopName","shopDescrip"]
-    
-    let sqlStr = 'UPDATE users SET ' + arr.reduce((acc,element,i)=>{
-        if(element){
-            acc += arrString[i] + '=${' + arrString[i] + '},'
-            //console.log(acc)
-            return acc 
-            
-        }
-        return acc
-    },'') 
-    
-    sqlStr = sqlStr.slice(0,sqlStr.length-1)
-    sqlStr = sqlStr + ` WHERE id=${id}`
-    console.log(sqlStr)
 
-    return db.none(sqlStr,{id,userName,name,email,creditCard,address,state,country,zipCode,shopName,shopDescrip})
+    const arrString = ["userName","name","email","creditCard","address","state","country","zipCode","shopName","shopDescrip"]
+    return db.none(createSqlCommandForUpdate(id,arr,arrString),{id,userName,name,email,creditCard,address,state,country,zipCode,shopName,shopDescrip})
+
 }
 
 userService.deleteUser = (id) =>{

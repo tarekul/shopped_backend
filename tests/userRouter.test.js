@@ -10,7 +10,7 @@ jest.mock('../services/user');
 const {userService} = require('../services/user');
 
 test('get request with id returns status 200', done =>{
-    userService.readUser.mockImplementation(() => Promise.resolve());
+    userService.readUser.mockImplementation(() => Promise.resolve({test:'1'}));
     request(app)
         .get('/user/7')
         .then(response=>{
@@ -30,13 +30,13 @@ test('get request with no id returns status 400', done =>{
             done();
         })
         .catch(e => {
-            expect(response.status).toBe(400)
+            expect(response).toBe(undefined)
             done();
           })
 })
 
-test('post request test',done=>{
-    userService.createUser.mockImplementation(()=> Promise.resolve())
+test('post request return status 200',done=>{
+    userService.createUser.mockImplementation(()=> Promise.resolve({test:'1'}))
     request(app)
         .post('/user')
         .send({
@@ -52,13 +52,13 @@ test('post request test',done=>{
         'shopDescrip':'j',
         })
         .then(response=>{
-            expect(response.status).toBe(200)
+            expect(response).toEqual({test:'1'})
             done();
         })
         .catch(e=> done())
 })
 
-test('post request when query fails',done=>{
+test('post request return status 400 when query fails',done=>{
     userService.createUser.mockImplementation(()=> Promise.reject())
     request(app)
         .post('/user')
@@ -72,12 +72,12 @@ test('post request when query fails',done=>{
             done();
         })
         .catch(e=>{
-            expect(response.status).toBe(400)
+            expect(response).toEqual(undefined)
             done()
         })
 })
 
-test('delete request test', done =>{
+test('delete request with id returns status 200', done =>{
     userService.deleteUser.mockImplementation(() => Promise.resolve());
     request(app)
         .delete('/user/7')
@@ -90,7 +90,7 @@ test('delete request test', done =>{
         })
 })
 
-test('delete request test when delete fails', done =>{
+test('delete request when it fails to delete', done =>{
     userService.deleteUser.mockImplementation(() => Promise.reject());
     request(app)
         .delete('/user/7')
@@ -99,27 +99,46 @@ test('delete request test when delete fails', done =>{
         })
         .catch(e => {
             expect(response).toBe(undefined)
-          done();
+            done();
         })
 })
 
-test('put request test', done =>{
-    userService.updateUser.mockImplementation(() => Promise.resolve());
+test('post request return status 400 when query fails',done=>{
+    userService.createUser.mockImplementation(()=> Promise.reject())
     request(app)
-        .put('/user/7')
+        .post('/user')
+        .send({
+            'name': 'a',
+            'email': 'b',
+            'password': 'c',
+            'phone_number': 'd'
+        })
+        .then(response=>{
+            done();
+        })
+        .catch(e=>{
+            expect(response).toEqual(undefined)
+            done()
+        })
+})
+
+test('put request with id returns status 200', done =>{
+    userService.deleteUser.mockImplementation(() => Promise.resolve());
+    request(app)
+        .delete('/user/7')
         .then(response=>{
             expect(response).toBe(undefined)
             done();
         })
         .catch(e => {
-            done();
+          done();
         })
 })
 
-test('put request fail test ', done =>{
+test('put request when it fails to do put request', done =>{
     userService.updateUser.mockImplementation(() => Promise.reject());
     request(app)
-        .put('/user/7')
+        .delete('/user/7')
         .then(response=>{
             done();
         })
