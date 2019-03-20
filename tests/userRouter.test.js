@@ -77,18 +77,18 @@ test('post request return status 400 when query fails',done=>{
         })
 })
 
-test('get request with id returns status 200', done =>{
-    userService.deleteUser.mockImplementation(() => Promise.resolve());
-    request(app)
-        .delete('/user/7')
-        .then(response=>{
-            expect(response).toBe(undefined)
-            done();
-        })
-        .catch(e => {
-          done();
-        })
-})
+// test('get request with id returns status 200', done =>{
+//     userService.deleteUser.mockImplementation(() => Promise.resolve());
+//     request(app)
+//         .delete('/user/7')
+//         .then(response=>{
+//             expect(response).toBe(undefined)
+//             done();
+//         })
+//         .catch(e => {
+//           done();
+//         })
+// })
 
 
 
