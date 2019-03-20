@@ -1,5 +1,4 @@
-const pgp = require('pg-promise')({})
-const db = pgp('postgress://localhost/shopped')
+const db = require('./db')
 const {createSqlCommandForUpdate} = require('../services/helper')
 const userService = {}
 
