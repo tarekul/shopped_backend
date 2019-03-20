@@ -44,7 +44,7 @@ userRouter.put('/:id',(req,res)=>{
         res.json({mssg:'update successful'})
     })
     .catch(err=>{
-        res.json({mssg:err.name})
+        res.json({err})
     })
 })
 

@@ -29,3 +29,9 @@ test("test deleteUser function",()=>{
         expect(data).toBe(undefined)
     })
 })
+
+test("test updateUser function",()=>{
+    userService.updateUser('a','b').then(data=>{
+        expect(data).toBe(undefined)
+    })
+})
