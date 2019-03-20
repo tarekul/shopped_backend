@@ -15,4 +15,5 @@ productRouter.get('/:prod_id',(req,res)=>{
 })
 
 
+
 module.exports = productRouter
