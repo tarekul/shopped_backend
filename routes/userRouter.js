@@ -21,20 +21,20 @@ userRouter.get('/:id',(req,res)=>{
     
 
 //post to users table new user
-userRouter.post('/',(req,res)=>{
-    const {userName,name,email,creditCard,address,state,country,zipCode,shopName,shopDescrip} = req.body
+// userRouter.post('/',(req,res)=>{
+//     const {userName,name,email,creditCard,address,state,country,zipCode,shopName,shopDescrip} = req.body
     
-    //console.log(userName,name,email,creditCard,address,state,zipCode,shopName,shopDescrip)
-    return userService.createUser(userName,name,email,creditCard,address,state,country,zipCode,shopName,shopDescrip)
-    .then(response =>{
-        res.status(200)
-        res.json({mssg:response})
-    })
-    .catch(err=>{
-        res.status(400)
-        res.json({err})
-    })
-})
+//     //console.log(userName,name,email,creditCard,address,state,zipCode,shopName,shopDescrip)
+//     return userService.createUser(userName,name,email,creditCard,address,state,country,zipCode,shopName,shopDescrip)
+//     .then(response =>{
+//         res.status(200)
+//         res.json({mssg:response})
+//     })
+//     .catch(err=>{
+//         res.status(400)
+//         res.json({err})
+//     })
+// })
 
 // userRouter.put('/:id',(req,res)=>{
 //     const {id} = req.params

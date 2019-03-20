@@ -14,7 +14,7 @@ test('get request with id returns status 200', done =>{
     request(app)
         .get('/user/7')
         .then(response=>{
-            expect(response.status).toBe(200)
+            expect(response).toEqual({test:'1'})
             done();
         })
         .catch(e => {
@@ -74,6 +74,19 @@ test('post request return status 400 when query fails',done=>{
         .catch(e=>{
             expect(response.status).toBe(400)
             done()
+        })
+})
+
+test('get request with id returns status 200', done =>{
+    userService.deleteUser.mockImplementation(() => Promise.resolve());
+    request(app)
+        .delete('/user/7')
+        .then(response=>{
+            expect(response).toBe(undefined)
+            done();
+        })
+        .catch(e => {
+          done();
         })
 })
 
