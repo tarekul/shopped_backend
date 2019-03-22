@@ -4,9 +4,9 @@ test("",()=>{
     expect('1').toEqual('1')
 })
 
-test("",()=>{
+test("helper function test",()=>{
     const a = 'a'
     const b = 'b'
     //console.log(createSqlCommandForUpdate('7',[a,b],['a','b']))
-    expect(createSqlCommandForUpdate('7',[a,b],['a','b'])).toBe('UPDATE users SET a=${a},b=${b} WHERE id=7')
+    expect(createSqlCommandForUpdate('7',[a,b],['a','b'],'users','id')).toBe('UPDATE users SET a=${a},b=${b} WHERE id=7')
 })
