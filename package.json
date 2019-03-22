@@ -39,7 +39,8 @@
       "!**/coverage/**",
       "!index.js",
       "!./services/product.js",
-      "!./services/shop.js"
+      "!./services/shop.js",
+      "!./services/cart.js"
     ]
   }
 }

@@ -36,8 +36,7 @@ CREATE TABLE products (
 
 CREATE TABLE cart (
   cart_id SERIAL PRIMARY KEY,
-  userid INT REFERENCES users(id) NOT NULL,
-  totalAmount INT NOT NULL
+  userid INT REFERENCES users(id) NOT NULL
 );
 
 CREATE TABLE cartItem (
