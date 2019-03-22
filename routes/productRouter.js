@@ -15,14 +15,38 @@ productRouter.get('/:prod_id',(req,res)=>{
 })
 
 productRouter.post('/',(req,res)=>{
-    const {userid,name,description,price,category,ratings,size} = req.body
-    productService.createProduct(userid,name,description,price,category,ratings,size)
+    const {shop_id,name,description,price,category,ratings,size} = req.body
+    productService.createProduct(shop_id,name,description,price,category,ratings,size)
     .then(response =>{
-        res.json({mssg:response})
+        res.json({mssg:'product created'})
     })
     .catch(err=>{
         res.json(err)
     })
+})
+
+productRouter.put('/:prod_id',(req,res)=>{
+    const {prod_id} = req.params
+    const {shop_id,name,description,price,category,ratings,size} = req.body
+    productService.updateProduct(prod_id,shop_id,name,description,price,category,ratings,size)
+    .then(response =>{
+        res.json({mssg:'product updated'})
+    })
+    .catch(err=>{
+        res.json(err)
+    })
+})
+
+productRouter.delete('/:prod_id',(req,res)=>{
+    const {prod_id} = req.params
+    return productService.deleteProduct(prod_id)
+    .then(response=>{
+        res.json({mssg:`product id: ${prod_id} deleted`})
+    })
+    .catch(err=>{
+        res.json(err)
+    })
+    
 })
 
 module.exports = productRouter

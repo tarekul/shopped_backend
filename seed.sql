@@ -5,34 +5,33 @@ CREATE DATABASE shopped;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  username VARCHAR (100) UNIQUE NOT NULL,
-  name VARCHAR(100) NOT NULL,
-  img json NULL,
-  email VARCHAR (100) UNIQUE NOT NULL,
-  address json NOT NULL,
+  username VARCHAR UNIQUE NOT NULL,
+  name VARCHAR NOT NULL,
+  img VARCHAR NULL,
+  email VARCHAR  UNIQUE NOT NULL,
+  address JSON NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  token VARCHAR NULL
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE shop (
   shop_id SERIAL PRIMARY KEY,
-  seller INT REFERENCES users(id) NOT NULL,
-  shop_name VARCHAR (100) NOT NULL,
-  description VARCHAR,
-  img_shop json NULL
+  sellerid INT REFERENCES users(id) NOT NULL,
+  shop_name VARCHAR NOT NULL,
+  description VARCHAR NULL,
+  img_shop VARCHAR NULL
 );
 
 CREATE TABLE products (
   prod_id SERIAL PRIMARY KEY,
-  userid INT REFERENCES users(id) NOT NULL,
-  name VARCHAR (100) NOT NULL,
+  shop_id INT REFERENCES shop(shop_id) NOT NULL,
+  name VARCHAR NOT NULL,
   description VARCHAR,
-  imgs json NULL,
+  imgs JSON NULL,
   price FLOAT(2) NOT NULL,
   category VARCHAR (100) NOT NULL,
   ratings INT NULL,
-  size INT NULL
+  size VARCHAR NULL
 );
 
 CREATE TABLE cart (
@@ -50,8 +49,8 @@ CREATE TABLE cartItem (
 
 CREATE TABLE orders (
   orderid SERIAL PRIMARY KEY,
-  buyer INT REFERENCES users(id) NULL,
-  buyer_guest VARCHAR NULL,
+  userid INT REFERENCES users(id) NULL,
+  user_guest VARCHAR NULL,
   totalAmount INT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -75,10 +74,11 @@ CREATE TABLE comments (
 
 
 
+INSERT INTO users (username,name,email) VALUES 
+('tarek123','tarek','tarek123@gmail.com');
 
+INSERT INTO users (username,name,email) VALUES 
+('brian123','brian','brian123@gmail.com');
 
--- INSERT INTO users (username, name, email) VALUES
--- ('J123', 'John', 'john@email.com');
-
--- INSERT INTO posts (author, title, body) VALUES
--- (1, 'bunny', 'Marshmello'), (2, 'dog', 'Chai'), (1, 'cat', 'Pixel');
+INSERT INTO shop (sellerid,shop_name,description,img_shop) VALUES 
+(1,'shopped','amazon clone','shop_url');

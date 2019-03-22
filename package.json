@@ -37,7 +37,8 @@
       "!**/__fixtures__/**",
       "!**/coverage/**",
       "!index.js",
-      "!./services/product.js"
+      "!./services/product.js",
+      "!./services/shop.js"
     ]
   }
 }

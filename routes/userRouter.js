@@ -22,13 +22,11 @@ userRouter.get('/:id',(req,res)=>{
 
 //post to users table new user
 userRouter.post('/',(req,res)=>{
-    const {userName,name,email,creditCard,address,state,country,zipCode,shopName,shopDescrip} = req.body
-    
-    //console.log(userName,name,email,creditCard,address,state,zipCode,shopName,shopDescrip)
-    return userService.createUser(userName,name,email,creditCard,address,state,country,zipCode,shopName,shopDescrip)
+    const {username,name,img,email,address} = req.body
+    return userService.createUser(username,name,img,email,address)
     .then(response =>{
         res.status(200)
-        res.json({mssg:response})
+        res.json(response)
     })
     .catch(err=>{
         res.status(400)
@@ -38,13 +36,13 @@ userRouter.post('/',(req,res)=>{
 
 userRouter.put('/:id',(req,res)=>{
     const {id} = req.params
-    const {userName,name,email,creditCard,address,state,zipCode,shopName,shopDescrip} = req.body
-    return userService.updateUser(id,userName,name,email,creditCard,address,state,zipCode,shopName,shopDescrip)
+    const {username,name,img,email,address} = req.body
+    return userService.updateUser(id,username,name,img,email,address)
     .then((response)=>{
         res.json({mssg:'update successful'})
     })
     .catch(err=>{
-        res.json({err})
+        res.json(err)
     })
 })
 
@@ -55,7 +53,7 @@ userRouter.delete('/:id',(req,res)=>{
         res.json({mssg:`user id: ${id} deleted`})
     })
     .catch(err=>{
-        res.json({err})
+        res.json(err)
     })
     
 })

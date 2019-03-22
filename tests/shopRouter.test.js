@@ -1,13 +1,13 @@
 const request = require('supertest')
-jest.mock('../services/product')
+jest.mock('../services/shop')
 
-const {productService} = require('../services/product')
+const {shopService} = require('../services/shop')
 const {app} = require('../app')
 
-test("test get product",done=>{
-    productService.readProduct.mockImplementation(()=> Promise.resolve({test:'1'}))
+test("test get shop",done=>{
+    shopService.readShop.mockImplementation(()=> Promise.resolve({test:'1'}))
     request(app)
-    .get('/product/4')
+    .get('/shop/4')
     .then(response=>{
         expect(response).toEqual({test:'1'})
         done()
@@ -17,10 +17,10 @@ test("test get product",done=>{
     })
 })
 
-test("test get product fail",done=>{
-    productService.readProduct.mockImplementation(()=> Promise.reject())
+test("test get shop fail",done=>{
+    shopService.readShop.mockImplementation(()=> Promise.reject())
     request(app)
-    .get('/product/4')
+    .get('/shop/4')
     .then(response=>{
         done()
     })
@@ -31,9 +31,9 @@ test("test get product fail",done=>{
 })
 
 test('post request test',done=>{
-    productService.createProduct.mockImplementation(()=> Promise.resolve({test:'1'}))
+    shopService.createShop.mockImplementation(()=> Promise.resolve({test:'1'}))
     request(app)
-        .post('/product')
+        .post('/shop')
         .send({
         'userName': 'a',
         'name': 'b',
@@ -54,9 +54,9 @@ test('post request test',done=>{
 })
 
 test('post request fail test',done=>{
-    productService.createProduct.mockImplementation(()=> Promise.reject())
+    shopService.createShop.mockImplementation(()=> Promise.reject())
     request(app)
-        .post('/product')
+        .post('/shop')
         .send({
             'name': 'a',
             'email': 'b',
@@ -73,9 +73,9 @@ test('post request fail test',done=>{
 })
 
 test('put request test', done =>{
-    productService.updateProduct.mockImplementation(() => Promise.resolve());
+    shopService.updateShop.mockImplementation(() => Promise.resolve());
     request(app)
-        .put('/product/7')
+        .put('/shop/7')
         .then(response=>{
             expect(response).toBe(undefined)
             done();
@@ -86,9 +86,9 @@ test('put request test', done =>{
 })
 
 test('put request when it fails to do put request', done =>{
-    productService.updateProduct.mockImplementation(() => Promise.reject());
+    shopService.updateShop.mockImplementation(() => Promise.reject());
     request(app)
-        .put('/product/7')
+        .put('/shop/7')
         .then(response=>{
             done();
         })
@@ -99,9 +99,9 @@ test('put request when it fails to do put request', done =>{
 })
 
 test('delete request test', done =>{
-    productService.deleteProduct.mockImplementation(() => Promise.resolve());
+    shopService.deleteShop.mockImplementation(() => Promise.resolve());
     request(app)
-        .delete('/product/7')
+        .delete('/shop/7')
         .then(response=>{
             expect(response).toBe(undefined)
             done();
@@ -112,9 +112,9 @@ test('delete request test', done =>{
 })
 
 test('delete request fail test', done =>{
-    productService.deleteProduct.mockImplementation(() => Promise.reject());
+    shopService.deleteShop.mockImplementation(() => Promise.reject());
     request(app)
-        .delete('/product/7')
+        .delete('/shop/7')
         .then(response=>{
             done();
         })

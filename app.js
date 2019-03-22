@@ -5,6 +5,8 @@ const cors = require('cors')
 
 const userRouter = require('./routes/userRouter')
 const productRouter = require('./routes/productRouter')
+const shopRouter = require('./routes/shopRouter')
+
 
 
 //middleware
@@ -16,5 +18,6 @@ app.use(bodyParser.json());
 //user routes
 app.use('/user',userRouter)
 app.use('/product',productRouter)
+app.use('/shop',shopRouter)
 
 module.exports = {app,}
