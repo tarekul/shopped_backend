@@ -5,6 +5,12 @@ install:
   - npm install
 before_script:
   - export COVERAGE_TOKEN=$COVERAGE_TOKEN
+  - export HEROKU_TOKEN = $HEROKU_TOKEN
 script:
   - npm run write-coveralls
   - npm test
+deploy:
+  provider: heroku
+  api_key: HEROKU_TOKEN
+  on: production
+  strategy: git

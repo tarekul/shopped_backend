@@ -1,7 +1,7 @@
--- DROP DATABASE IF EXISTS shopped;
--- CREATE DATABASE shopped;
+DROP DATABASE IF EXISTS shopped;
+CREATE DATABASE shopped;
 
--- \c shopped;
+\c shopped;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
