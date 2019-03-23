@@ -3,29 +3,30 @@ const {createSqlCommandForUpdate} = require('../services/helper')
 const cartService = {}
 
 //cart table
-cartService.readCart = (cart_id) =>{
-    return db.any('SELECT * FROM cart JOIN cartItem ON cart.cart_id=${cart_id} AND cartItem.cart_id=${cart_id} ',{cart_id}) 
+cartService.readCart = (username) =>{
+    return db.any('SELECT * FROM cart JOIN cartItem ON cart.cart_id = cartItem.cart_id WHERE username = $[username]',{username}) 
 }
 
-cartService.readCartId = (userid) =>{
-    return db.one('SELECT * FROM cart WHERE userid=${userid}',{userid}) 
+cartService.readCartUserName = (username) =>{
+    return db.one('SELECT * FROM cart WHERE username=${username}',{username}) 
 }
 
-cartService.countCartItems = (cartitem_id) =>{
-    return db.one('SELECT COUNT(cartitem_id) FROM cartItem WHERE cartitem_id=${cartitem_id}',{cartitem_id}) 
+cartService.countCartItemsWithCartId = (cart_id) =>{
+    return db.one('SELECT COUNT(cart_id) FROM cartItem WHERE cart_id=${cart_id}',{cart_id}) 
 }
+
 
 cartService.readCartItem = (cartitem_id) =>{
     return db.one('SELECT * FROM cartItem WHERE cartitem_id=${cartitem_id}',{cartitem_id}) 
 }
 
-cartService.createCart = (userid,prod_id,quantity) =>{
-    return cartService.readCartId(userid)
+cartService.createCart = (username,prod_id,quantity) =>{
+    return cartService.readCartId(username)
     .then(response=>{})
     .catch(err=>{
-        return db.none('INSERT INTO cart (userid) VALUES (${userid})',{userid})
+        return db.none('INSERT INTO cart (username) VALUES (${username})',{username})
             .then(()=>{
-                return cartService.readCartId(userid)
+                return cartService.readCartUserName(username)
             })
             .then((response)=>{
                 const cart_id = response.cart_id
@@ -41,28 +42,37 @@ cartService.addCart = (cart_id,prod_id,quantity) =>{
 }
 
 cartService.deleteCartItem = (cartitem_id) =>{
-    return cartService.countCartItems(cartitem_id).then(response=>{
-        if(response.count === '1'){
-            return cartService.readCartItem(cartitem_id)
-            .then(response=>{
-                db.none('DELETE FROM cartItem WHERE cartitem_id=${cartitem_id}',{cartitem_id})
-                return cartService.deleteCart(response.cart_id)
+    let cartid = 0
+    return cartService.readCartItem(cartitem_id)
+    .then((response)=>{
+        cartid = response.cart_id
+        return cartService.countCartItemsWithCartId(response.cart_id)
+    })
+    .then(response=>{
+        if(response.count === "1"){
+            return db.none('DELETE FROM cartItem WHERE cartitem_id=${cartitem_id}',{cartitem_id})
+            .then(()=>{
+                return cartService.deleteCart(cartid)
             })
-            
         }
         else{
-            db.none('DELETE FROM cartItem WHERE cartitem_id=${cartitem_id}',{cartitem_id})
+            return db.none('DELETE FROM cartItem WHERE cartitem_id=${cartitem_id}',{cartitem_id})
         }
     })
+    
+        
+        
+  
+    
+        
+  
     
 
 }
 
 cartService.deleteCart = (cart_id) =>{
-    return db.none('DELETE FROM cartItem WHERE cart_id=${cart_id}',{cart_id})
-            .then(()=>{
-                return db.none('DELETE FROM cart WHERE cart_id=${cart_id}',{cart_id})
-            })
+    return db.none('DELETE FROM cart WHERE cart_id=${cart_id}',{cart_id})
+          
 }
 
 module.exports = {cartService, db};

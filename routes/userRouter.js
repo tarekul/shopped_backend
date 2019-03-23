@@ -4,10 +4,10 @@ const {userService} = require('../services/user')
 
 
 // get users info
-userRouter.get('/:id',(req,res)=>{
-    const {id} = req.params
+userRouter.get('/:username',(req,res)=>{
+    const {username} = req.params
     console.log(res.status)
-    return userService.readUser(id)
+    return userService.readUser(username)
     .then(response=>{
         console.log(response)
         res.status(200)
@@ -34,10 +34,10 @@ userRouter.post('/',(req,res)=>{
     })
 })
 
-userRouter.put('/:id',(req,res)=>{
-    const {id} = req.params
+userRouter.put('/:username',(req,res)=>{
+    const before_username = req.params.username
     const {username,name,img,email,address} = req.body
-    return userService.updateUser(id,username,name,img,email,address)
+    return userService.updateUser(before_username,username,name,img,email,address)
     .then((response)=>{
         res.json({mssg:'update successful'})
     })
@@ -46,11 +46,11 @@ userRouter.put('/:id',(req,res)=>{
     })
 })
 
-userRouter.delete('/:id',(req,res)=>{
-    const {id} = req.params
-    return userService.deleteUser(id)
+userRouter.delete('/:username',(req,res)=>{
+    const {username} = req.params
+    return userService.deleteUser(username)
     .then(response=>{
-        res.json({mssg:`user id: ${id} deleted`})
+        res.json({mssg:`user username: ${username} deleted`})
     })
     .catch(err=>{
         res.json(err)
@@ -58,49 +58,7 @@ userRouter.delete('/:id',(req,res)=>{
     
 })
 
-// //product routes
-// userRouter.get('/:id/product',(req,res)=>{
-//     const {id} = req.params
-//     userService.getShopProducts(id)
-//     .then(response=>{
-//         res.json(response)
-//     })
-//     .catch(err=>{
-//         res.json({mssg:err.name})
-//     })
-// })
 
-// // userRouter.get('/:id/product/:prod_id',(req,res)=>{
-// //     const {id,prod_id} = req.params
-// //     res.send(`get product with id ${prod_id} for user ${id}`)
-// // })
-
-// userRouter.post('/:id/product',(req,res)=>{
-//     const {id} = req.params
-//     const {name,description,price,category,ratings,size} = req.body
-//     return userService.createProduct(id,name,description,price,category,ratings,size)
-//     .then(response=>{
-//         res.json({mssg:`new product created for seller id: ${id}`})
-//     })
-//     .catch(err=>{
-//         res.json({mssg:err.name})
-//     })
-
-// })
-
-
-// //order routes
-// userRouter.get('/:id/orders',(req,res)=>{
-//     const {id} = req.params
-//     userService.getUserOrders(id)
-//     .then(response=>{
-//         res.json(response)
-//     })
-//     .catch(err=>{
-//         res.json({mssg:err.name})
-//     })
-    
-// })
 
 
 

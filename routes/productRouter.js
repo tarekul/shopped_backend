@@ -14,9 +14,21 @@ productRouter.get('/:prod_id',(req,res)=>{
     })
 })
 
+productRouter.get('/:prod_name/store/:store_name',(req,res)=>{
+    const {prod_name,shop_name} = req.params
+    productService.readProductWShopProd(prod_id,shop_name)
+    .then(response=>{
+        res.json(response)
+    })
+    .catch(err=>{
+        res.json(err)
+    })
+})
+
+
 productRouter.post('/',(req,res)=>{
-    const {shop_id,name,description,price,category,ratings,size} = req.body
-    productService.createProduct(shop_id,name,description,price,category,ratings,size)
+    const {shop_name,name,description,price,category,ratings,size} = req.body
+    productService.createProduct(shop_name,name,description,price,category,ratings,size)
     .then(response =>{
         res.json({mssg:'product created'})
     })
@@ -25,10 +37,10 @@ productRouter.post('/',(req,res)=>{
     })
 })
 
-productRouter.put('/:prod_id',(req,res)=>{
-    const {prod_id} = req.params
-    const {shop_id,name,description,price,category,ratings,size} = req.body
-    productService.updateProduct(prod_id,shop_id,name,description,price,category,ratings,size)
+productRouter.put('/:prod_name/shop/:shop_name',(req,res)=>{
+    const {prod_name,shop_name} = req.params
+    const {name,description,price,category,ratings,size} = req.body
+    productService.updateProduct(prod_name,shop_name,name,description,price,category,ratings,size)
     .then(response =>{
         res.json({mssg:'product updated'})
     })
@@ -37,11 +49,11 @@ productRouter.put('/:prod_id',(req,res)=>{
     })
 })
 
-productRouter.delete('/:prod_id',(req,res)=>{
-    const {prod_id} = req.params
-    return productService.deleteProduct(prod_id)
+productRouter.delete('/:prod_name',(req,res)=>{
+    const {prod_name} = req.params
+    return productService.deleteProduct(prod_name)
     .then(response=>{
-        res.json({mssg:`product id: ${prod_id} deleted`})
+        res.json({mssg:`product id: ${prod_name} deleted`})
     })
     .catch(err=>{
         res.json(err)
