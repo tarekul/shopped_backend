@@ -12,4 +12,4 @@ const createSqlCommandForUpdate2 = (arr,arrString,tableName,whereColumn)=>{
     return sqlStr
 }
 
-module.exports = {createSqlCommandForUpdate,createSqlCommandForUpdate2}
+module.exports = {createSqlCommandForUpdate2}
