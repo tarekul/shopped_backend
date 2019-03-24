@@ -1,14 +1,14 @@
 const db = require('./db')
-const {createSqlCommandForUpdate} = require('../services/helper')
+const {createSqlCommandForUpdate2} = require('../services/helper')
 const cartService = {}
 
 //cart table
-cartService.readCart = (username) =>{
-    return db.any('SELECT * FROM cart JOIN cartItem ON cart.cart_id = cartItem.cart_id WHERE username = $[username]',{username}) 
+cartService.readCart = (userid) =>{
+    return db.any('SELECT * FROM cart JOIN cartItem ON cart.cart_id = cartItem.cart_id WHERE userid = $[userid]',{userid}) 
 }
 
-cartService.readCartUserName = (username) =>{
-    return db.one('SELECT * FROM cart WHERE username=${username}',{username}) 
+cartService.readCartItems = (cart_id) =>{
+    return db.one('SELECT * FROM cartItem WHERE cart_id=${cart_id}',{cart_id}) 
 }
 
 cartService.countCartItemsWithCartId = (cart_id) =>{
@@ -20,13 +20,15 @@ cartService.readCartItem = (cartitem_id) =>{
     return db.one('SELECT * FROM cartItem WHERE cartitem_id=${cartitem_id}',{cartitem_id}) 
 }
 
-cartService.createCart = (username,prod_id,quantity) =>{
-    return cartService.readCartId(username)
-    .then(response=>{})
+cartService.createCart = (userid,prod_id,quantity) =>{
+    return cartService.readCart(userid)
+    .then(response=>{
+        return cartService.addCart(response.cart_id,prod_id,quantity)
+    })
     .catch(err=>{
-        return db.none('INSERT INTO cart (username) VALUES (${username})',{username})
+        return db.none('INSERT INTO cart (userid) VALUES (${userid})',{userid})
             .then(()=>{
-                return cartService.readCartUserName(username)
+                return cartService.readCart(userid)
             })
             .then((response)=>{
                 const cart_id = response.cart_id

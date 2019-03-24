@@ -4,31 +4,33 @@ const {cartService} = require('../services/cart')
 
 
 // get users info
-cartRouter.get('/:username',(req,res)=>{
-    const {username} = req.params
-    return cartService.readCart(username)
+cartRouter.get('/:userid',(req,res)=>{
+    const {userid} = req.params
+    return cartService.readCart(userid)
     .then(response=>{
         res.status(200)
         res.json(response)
     })
     .catch(err=>{
         res.status(400)
-        res.json({err})
+        res.json(err)
     })
 })
     
 
 //post to users table new user
 cartRouter.post('/',(req,res)=>{
-    const {username,prod_id,quantity} = req.body
-    return cartService.createCart(username,prod_id,quantity)
+    const {userid,prod_id,quantity} = req.body
+    return cartService.createCart(userid,prod_id,quantity)
     .then(response =>{
-        res.status(200)
-        res.json(response)
+        return cartService.readCart(userid)
+    })
+    .then(response=>{
+        cartService.readCartItems(response.cart_id)
     })
     .catch(err=>{
         res.status(400)
-        res.json({err})
+        res.json(err)
     })
 })
 

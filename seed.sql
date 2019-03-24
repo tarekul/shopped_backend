@@ -1,7 +1,11 @@
--- DROP DATABASE IF EXISTS shopped;
--- CREATE DATABASE shopped;
+DROP TABLE IF EXISTS comments CASCADE;
+DROP TABLE IF EXISTS cartItem CASCADE;
+DROP TABLE IF EXISTS cart CASCADE;
 
--- \c shopped;
+DROP TABLE IF EXISTS shop CASCADE;
+DROP TABLE IF EXISTS products CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS orders CASCADE;
 
 CREATE TABLE users (
   userid SERIAL PRIMARY KEY,
@@ -54,8 +58,11 @@ CREATE TABLE cartItem (
     FOREIGN KEY (cart_id)
     REFERENCES cart(cart_id)
     ON DELETE CASCADE,
-  prod_id INT REFERENCES products(prod_id) NOT NULL,
-  quantity INT
+  prod_id INT NOT NULL,
+    FOREIGN KEY (prod_id)
+    REFERENCES products(prod_id)
+    ON DELETE CASCADE,
+  quantity INT NOT NULL
 );
 
 CREATE TABLE orders (
@@ -87,24 +94,24 @@ CREATE TABLE comments (
 
 
 
--- INSERT INTO users (username,name,email) VALUES 
--- ('tarek123','tarek','tarek123@gmail.com'),
--- ('brian123','brian','brian123@gmail.com');
+INSERT INTO users (username,name,email) VALUES 
+('tarek123','tarek','tarek123@gmail.com'),
+('brian123','brian','brian123@gmail.com');
 
--- INSERT INTO shop (sellerid,shop_name,description,img_shop) VALUES 
--- (1,'shopped','amazon clone','shop_url');
+INSERT INTO shop (sellerid,shop_name,description,img_shop) VALUES 
+(1,'shopped','amazon clone','shop_url');
 
--- INSERT INTO products (shop_id,prodname,price,category) VALUES 
--- (1,'iPad',499,'tech'),
--- (1,'macbook',1499,'tech');
+INSERT INTO products (shop_id,prod_name,price,category) VALUES 
+(1,'iPad',499,'tech'),
+(1,'macbook',1499,'tech');
 
--- INSERT INTO cart (userid) VALUES 
--- (2);
+INSERT INTO cart (userid) VALUES 
+(2);
 
--- INSERT INTO cartItem (cart_id,prod_id,quantity) VALUES 
--- (1,1,5);
+INSERT INTO cartItem (cart_id,prod_id,quantity) VALUES 
+(1,1,5);
 
--- INSERT INTO cartItem (cart_id,prod_id,quantity) VALUES 
--- (1,2,5);
+INSERT INTO cartItem (cart_id,prod_id,quantity) VALUES 
+(1,2,5);
 
 
