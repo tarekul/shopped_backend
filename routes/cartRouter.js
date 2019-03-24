@@ -39,19 +39,21 @@ cartRouter.put('/:cart_id',(req,res)=>{
     const {prod_id,quantity} = req.body
     cartService.addCart(cart_id,prod_id,quantity)
     .then((response)=>{
-        res.json({mssg:'Add to cart successful'})
+        return cartService.readCartItems(cart_id)
     })
+    .then(response=>res.json(response))
     .catch(err=>{
         res.json(err)
     })
 })
 
-cartRouter.delete('/:cartitem_id/cartitem',(req,res)=>{
-    const {cartitem_id} = req.params
+cartRouter.delete('/:cartitem_id/cartitem/:userid',(req,res)=>{
+    const {cartitem_id,userid} = req.params
         return cartService.deleteCartItem(cartitem_id)
         .then(response=>{
-            res.json({mssg:`cartitem id ${cartitem_id} deleted`})
+            return cartService.readCart(userid)
         })
+        .then(response=>res.json(response))
         .catch(err=>{
             res.json(err)
         })
