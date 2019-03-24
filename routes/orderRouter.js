@@ -1,12 +1,12 @@
 const express = require('express')
-const cartRouter = express.Router();
-const {cartService} = require('../services/cart')
+const orderRouter = express.Router();
+const {orderService} = require('../services/order')
 
 
 // get users info
-cartRouter.get('/:username',(req,res)=>{
-    const {username} = req.params
-    return cartService.readCart(username)
+orderRouter.get('/:cart_id',(req,res)=>{
+    const {cart_id} = req.params
+    return orderService.readCart(cart_id)
     .then(response=>{
         res.status(200)
         res.json(response)
@@ -19,9 +19,9 @@ cartRouter.get('/:username',(req,res)=>{
     
 
 //post to users table new user
-cartRouter.post('/',(req,res)=>{
-    const {username,prod_id,quantity} = req.body
-    return cartService.createCart(username,prod_id,quantity)
+orderRouter.post('/',(req,res)=>{
+    const {userid,prod_id,quantity} = req.body
+    return orderService.createCart(userid,prod_id,quantity)
     .then(response =>{
         res.status(200)
         res.json(response)
@@ -32,10 +32,10 @@ cartRouter.post('/',(req,res)=>{
     })
 })
 
-cartRouter.put('/:cart_id',(req,res)=>{
+orderRouter.put('/:cart_id',(req,res)=>{
     const {cart_id} = req.params
     const {prod_id,quantity} = req.body
-    cartService.addCart(cart_id,prod_id,quantity)
+    orderService.addCart(cart_id,prod_id,quantity)
     .then((response)=>{
         res.json({mssg:'Add to cart successful'})
     })
@@ -44,9 +44,9 @@ cartRouter.put('/:cart_id',(req,res)=>{
     })
 })
 
-cartRouter.delete('/:cartitem_id/cartitem',(req,res)=>{
+orderRouter.delete('/:cartitem_id/cartitem',(req,res)=>{
     const {cartitem_id} = req.params
-        return cartService.deleteCartItem(cartitem_id)
+        return orderService.deleteCartItem(cartitem_id)
         .then(response=>{
             res.json({mssg:`cartitem id ${cartitem_id} deleted`})
         })
@@ -58,9 +58,9 @@ cartRouter.delete('/:cartitem_id/cartitem',(req,res)=>{
     
 })
 
-cartRouter.delete('/:cart_id',(req,res)=>{
+orderRouter.delete('/:cart_id',(req,res)=>{
     const {cart_id} = req.params
-    return cartService.deleteCart(cart_id)
+    return orderService.deleteCart(cart_id)
     .then(response=>{
         res.json({mssg:`user cart_id: ${cart_id} deleted`})
     })
@@ -71,7 +71,7 @@ cartRouter.delete('/:cart_id',(req,res)=>{
 })
 
 
-module.exports = cartRouter
+module.exports = orderRouter
 
 
 

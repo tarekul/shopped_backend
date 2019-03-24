@@ -59,7 +59,7 @@ test('post request test',done=>{
 })
 
 test('post request fail test',done=>{
-    userService.createUser.mockImplementation(()=> Promise.reject())
+    userService.createUser.mockImplementation(()=> Promise.reject({err:err}))
     request(app)
         .post('/user')
         .send({
@@ -72,7 +72,7 @@ test('post request fail test',done=>{
             done();
         })
         .catch(e=>{
-            expect(response).toEqual(undefined)
+            expect(response).toEqual({err:err})
             done()
         })
 })

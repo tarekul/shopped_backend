@@ -4,17 +4,13 @@ const {userService} = require('../services/user')
 
 
 // get users info
-userRouter.get('/:id',(req,res)=>{
-    const {id} = req.params
-    console.log(res.status)
-    return userService.readUser(id)
+userRouter.get('/:userid',(req,res)=>{
+    const {userid} = req.params
+    return userService.readUser(userid)
     .then(response=>{
-        console.log(response)
-        res.status(200)
         res.json(response)
     })
     .catch(err=>{
-        res.status(400)
         res.json({err})
     })
 })
@@ -25,32 +21,36 @@ userRouter.post('/',(req,res)=>{
     const {username,name,img,email,address} = req.body
     return userService.createUser(username,name,img,email,address)
     .then(response =>{
-        res.status(200)
-        res.json(response)
+        return userService.readUserId(username)
+    })
+    .then(response=>{
+        res.send(response)
     })
     .catch(err=>{
         res.status(400)
-        res.json({err})
+        res.json({err:err.detail})
     })
 })
 
-userRouter.put('/:id',(req,res)=>{
-    const {id} = req.params
+userRouter.put('/:userid',(req,res)=>{
+    const {userid} = req.params
     const {username,name,img,email,address} = req.body
-    return userService.updateUser(id,username,name,img,email,address)
+    console.log(username,name,img,email,address)
+    return userService.updateUser(userid,username,name,img,email,address)
     .then((response)=>{
-        res.json({mssg:'update successful'})
+       return userService.readUser(userid)
     })
+    .then(response=>res.send(response))
     .catch(err=>{
         res.json(err)
     })
 })
 
-userRouter.delete('/:id',(req,res)=>{
-    const {id} = req.params
-    return userService.deleteUser(id)
+userRouter.delete('/:userid',(req,res)=>{
+    const {userid} = req.params
+    return userService.deleteUser(userid)
     .then(response=>{
-        res.json({mssg:`user id: ${id} deleted`})
+        res.json({mssg:`user userid: ${userid} deleted`})
     })
     .catch(err=>{
         res.json(err)
@@ -58,49 +58,7 @@ userRouter.delete('/:id',(req,res)=>{
     
 })
 
-// //product routes
-// userRouter.get('/:id/product',(req,res)=>{
-//     const {id} = req.params
-//     userService.getShopProducts(id)
-//     .then(response=>{
-//         res.json(response)
-//     })
-//     .catch(err=>{
-//         res.json({mssg:err.name})
-//     })
-// })
 
-// // userRouter.get('/:id/product/:prod_id',(req,res)=>{
-// //     const {id,prod_id} = req.params
-// //     res.send(`get product with id ${prod_id} for user ${id}`)
-// // })
-
-// userRouter.post('/:id/product',(req,res)=>{
-//     const {id} = req.params
-//     const {name,description,price,category,ratings,size} = req.body
-//     return userService.createProduct(id,name,description,price,category,ratings,size)
-//     .then(response=>{
-//         res.json({mssg:`new product created for seller id: ${id}`})
-//     })
-//     .catch(err=>{
-//         res.json({mssg:err.name})
-//     })
-
-// })
-
-
-// //order routes
-// userRouter.get('/:id/orders',(req,res)=>{
-//     const {id} = req.params
-//     userService.getUserOrders(id)
-//     .then(response=>{
-//         res.json(response)
-//     })
-//     .catch(err=>{
-//         res.json({mssg:err.name})
-//     })
-    
-// })
 
 
 
