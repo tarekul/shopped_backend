@@ -14,9 +14,9 @@ shopRouter.get('/:shop_id',(req,res)=>{
     })
 })
 
-shopRouter.get('/:shop_name',(req,res)=>{
-    const {shop_name} = req.params
-    shopService.readShopName(shop_name)
+shopRouter.get('/:shop_id/products',(req,res)=>{
+    const {shop_id} = req.params
+    shopService.readShopProducts(shop_id)
     .then(response=>{
         res.json(response)
     })
@@ -27,10 +27,13 @@ shopRouter.get('/:shop_name',(req,res)=>{
 
 shopRouter.post('/',(req,res)=>{
     const {sellerid,shop_name,description,img_shop} = req.body
-    //console.log(sellerid,shop_name,description,img_shop)
+    //console.log(sellerid,shop_id,description,img_shop)
     shopService.createShop(sellerid,shop_name,description,img_shop)
-    .then(response =>{
-        res.json({mssg:'Shop created'})
+    .then(() =>{
+        return shopService.readShopWshopname(shop_name)
+    })
+    .then(response=>{
+        res.send(response)
     })
     .catch(err=>{
         res.json(err)
@@ -39,27 +42,17 @@ shopRouter.post('/',(req,res)=>{
 
 shopRouter.put('/:shop_id',(req,res)=>{
     const {shop_id} = req.params
-    const {sellerid,shop_name,description,img_shop} = req.body
-    shopService.updateShop(shop_id,sellerid,shop_name,description,img_shop)
+    const {shop_name,description,img_shop} = req.body
+    shopService.updateShop(shop_id,shop_name,description,img_shop)
     .then(response =>{
-        res.json({mssg:'Shop updated'})
+        return shopService.readShop(shop_id)
     })
+    .then(response=>res.send(response))
     .catch(err=>{
         res.json(err)
     })
 })
 
-shopRouter.put('/:shop_name',(req,res)=>{
-    const {beforeshop_name} = req.params.shop_name
-    const {sellerid,shop_name,description,img_shop} = req.body
-    shopService.updateShop(beforeshop_name,sellerid,shop_name,description,img_shop)
-    .then(response =>{
-        res.json({mssg:'Shop updated'})
-    })
-    .catch(err=>{
-        res.json(err)
-    })
-})
 
 shopRouter.delete('/:shop_id',(req,res)=>{
     const {shop_id} = req.params
@@ -73,16 +66,5 @@ shopRouter.delete('/:shop_id',(req,res)=>{
     
 })
 
-shopRouter.delete('/:shop_name',(req,res)=>{
-    const {shop_name} = req.params
-    return shopService.deleteShopName(shop_name)
-    .then(response=>{
-        res.json({mssg:`Shop name: ${shop_name} deleted`})
-    })
-    .catch(err=>{
-        res.json(err)
-    })
-    
-})
 
 module.exports = shopRouter

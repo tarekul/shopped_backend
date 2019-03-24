@@ -1,4 +1,4 @@
-const createSqlCommandForUpdate = (a,b,arr,arrString,tableName,firstcolumnname,secondcolumnname)=>{
+const createSqlCommandForUpdate = (a,b,arr,arrString,tableName,whereColumn,secondcolumnname)=>{
     let sqlStr = `UPDATE ${tableName} SET `
     for(let i=0; i < arr.length;i++){
         if(arr[i]){
@@ -7,12 +7,12 @@ const createSqlCommandForUpdate = (a,b,arr,arrString,tableName,firstcolumnname,s
     }
 
     sqlStr = sqlStr.slice(0,sqlStr.length-1)
-    sqlStr = sqlStr + ` WHERE ${firstcolumnname}=${a} AND ${secondcolumnname}=${b}`
+    sqlStr = sqlStr + ` WHERE ${whereColumn}=${a} AND ${secondcolumnname}=${b}`
     console.log(sqlStr)
     return sqlStr
 }
 
-const createSqlCommandForUpdate2 = (a,arr,arrString,tableName,firstcolumnname)=>{
+const createSqlCommandForUpdate2 = (arr,arrString,tableName,whereColumn)=>{
     let sqlStr = `UPDATE ${tableName} SET `
     for(let i=0; i < arr.length;i++){
         if(arr[i]){
@@ -21,7 +21,7 @@ const createSqlCommandForUpdate2 = (a,arr,arrString,tableName,firstcolumnname)=>
     }
 
     sqlStr = sqlStr.slice(0,sqlStr.length-1)
-    sqlStr = sqlStr + ` WHERE ${firstcolumnname}=${a}`
+    sqlStr = sqlStr + ' WHERE ' + whereColumn + '=${' + whereColumn + '}'
     console.log(sqlStr)
     return sqlStr
 }

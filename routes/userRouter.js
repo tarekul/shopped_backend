@@ -4,17 +4,13 @@ const {userService} = require('../services/user')
 
 
 // get users info
-userRouter.get('/:username',(req,res)=>{
-    const {username} = req.params
-    console.log(res.status)
-    return userService.readUser(username)
+userRouter.get('/:userid',(req,res)=>{
+    const {userid} = req.params
+    return userService.readUser(userid)
     .then(response=>{
-        console.log(response)
-        res.status(200)
         res.json(response)
     })
     .catch(err=>{
-        res.status(400)
         res.json({err})
     })
 })
@@ -25,32 +21,36 @@ userRouter.post('/',(req,res)=>{
     const {username,name,img,email,address} = req.body
     return userService.createUser(username,name,img,email,address)
     .then(response =>{
-        res.status(200)
-        res.json(response)
+        return userService.readUserId(username)
+    })
+    .then(response=>{
+        res.send(response)
     })
     .catch(err=>{
         res.status(400)
-        res.json({err})
+        res.json({err:err.detail})
     })
 })
 
-userRouter.put('/:username',(req,res)=>{
-    const before_username = req.params.username
+userRouter.put('/:userid',(req,res)=>{
+    const {userid} = req.params
     const {username,name,img,email,address} = req.body
-    return userService.updateUser(before_username,username,name,img,email,address)
+    console.log(username,name,img,email,address)
+    return userService.updateUser(userid,username,name,img,email,address)
     .then((response)=>{
-        res.json({mssg:'update successful'})
+       return userService.readUser(userid)
     })
+    .then(response=>res.send(response))
     .catch(err=>{
         res.json(err)
     })
 })
 
-userRouter.delete('/:username',(req,res)=>{
-    const {username} = req.params
-    return userService.deleteUser(username)
+userRouter.delete('/:userid',(req,res)=>{
+    const {userid} = req.params
+    return userService.deleteUser(userid)
     .then(response=>{
-        res.json({mssg:`user username: ${username} deleted`})
+        res.json({mssg:`user userid: ${userid} deleted`})
     })
     .catch(err=>{
         res.json(err)

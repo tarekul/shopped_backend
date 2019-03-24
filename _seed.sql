@@ -4,7 +4,7 @@ CREATE DATABASE shopped;
 \c shopped;
 
 CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
+  userid SERIAL PRIMARY KEY,
   username VARCHAR UNIQUE NOT NULL,
   name VARCHAR NOT NULL,
   img VARCHAR NULL,
@@ -18,7 +18,7 @@ CREATE TABLE shop (
   shop_id SERIAL PRIMARY KEY,
   sellerid INT NOT NULL,
     FOREIGN KEY (sellerid)
-    REFERENCES users(id)
+    REFERENCES users(userid)
     ON DELETE CASCADE,
   shop_name VARCHAR UNIQUE NOT NULL,
   description VARCHAR NULL,
@@ -27,9 +27,9 @@ CREATE TABLE shop (
 
 CREATE TABLE products (
   prod_id SERIAL PRIMARY KEY,
-  shop_name VARCHAR NOT NULL,
-    FOREIGN KEY (shop_name)
-    REFERENCES shop(shop_name)
+  shop_id INT NOT NULL,
+    FOREIGN KEY (shop_id)
+    REFERENCES shop(shop_id)
     ON DELETE CASCADE,
   prod_name VARCHAR NOT NULL,
   description VARCHAR,
@@ -42,9 +42,9 @@ CREATE TABLE products (
 
 CREATE TABLE cart (
   cart_id SERIAL PRIMARY KEY,
-  username INT UNIQUE NOT NULL,
-    FOREIGN KEY (username)
-    REFERENCES users(username)
+  userid INT UNIQUE NOT NULL,
+    FOREIGN KEY (userid)
+    REFERENCES users(userid)
     ON DELETE CASCADE
 );
 
@@ -54,25 +54,34 @@ CREATE TABLE cartItem (
     FOREIGN KEY (cart_id)
     REFERENCES cart(cart_id)
     ON DELETE CASCADE,
-  prod_id INT REFERENCES products(prod_id) NOT NULL,
-  quantity INT
+  prod_id INT NOT NULL,
+    FOREIGN KEY (prod_id)
+    REFERENCES products(prod_id)
+    ON DELETE CASCADE,
+  quantity INT NOT NULL
 );
 
 CREATE TABLE orders (
   orderid SERIAL PRIMARY KEY,
   userid INT NULL,
     FOREIGN KEY (userid)
-    REFERENCES users(id)
+    REFERENCES users(userid)
     ON DELETE CASCADE,
-  purchased JSON NOT NULL  
+  purchased JSON NOT NULL,  
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 
 CREATE TABLE comments (
   comment_id SERIAL PRIMARY KEY,
-  prod_id INT REFERENCES products(prod_id) NOT NULL,
-  users_id INT REFERENCES users(id) NOT NULL,
+  prod_id INT NOT NULL,
+    FOREIGN KEY (prod_id)
+    REFERENCES products(prod_id)
+    ON DELETE CASCADE,
+  userid INT NOT NULL,
+    FOREIGN KEY (userid)
+    REFERENCES users(userid)
+    ON DELETE CASCADE,
   comment VARCHAR NOT NULL,
   rate INT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -88,7 +97,7 @@ INSERT INTO users (username,name,email) VALUES
 INSERT INTO shop (sellerid,shop_name,description,img_shop) VALUES 
 (1,'shopped','amazon clone','shop_url');
 
-INSERT INTO products (shop_id,prodname,price,category) VALUES 
+INSERT INTO products (shop_id,prod_name,price,category) VALUES 
 (1,'iPad',499,'tech'),
 (1,'macbook',1499,'tech');
 
