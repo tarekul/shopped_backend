@@ -40,7 +40,8 @@
       "!index.js",
       "!./services/product.js",
       "!./services/shop.js",
-      "!./services/cart.js"
+      "!./services/cart.js",
+      "!./services/order.js"
     ]
   }
 }
