@@ -12,5 +12,6 @@ script:
 deploy:
   provider: heroku
   api_key: HEROKU_TOKEN
+  app: shopped-backend
   on: master
   strategy: git
