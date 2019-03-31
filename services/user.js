@@ -12,8 +12,8 @@ userService.readUserId = (username) =>{
     return db.one('SELECT * FROM users WHERE username=${username}',{username})
 }
 
-userService.createUser = (username,name,img,email,address) =>{
-    return db.none('INSERT INTO users (username,name,img,email,address) VALUES (${username},${name},${img},${email},${address})',{username,name,img,email,address})
+userService.createUser = (username,name,img,email,address,uid) =>{
+    return db.none('INSERT INTO users (username,name,img,email,address,uid) VALUES (${username},${name},${img},${email},${address},${uid})',{username,name,img,email,address,uid})
 }
 
 userService.updateUser = (userid,username,name,img,email,address) =>{

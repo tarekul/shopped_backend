@@ -18,8 +18,8 @@ userRouter.get('/:userid',(req,res)=>{
 
 //post to users table new user
 userRouter.post('/',(req,res)=>{
-    const {username,name,img,email,address} = req.body
-    return userService.createUser(username,name,img,email,address)
+    const {username,name,img,email,address,uid} = req.body
+    return userService.createUser(username,name,img,email,address,uid)
     .then(response =>{
         return userService.readUserId(username)
     })
