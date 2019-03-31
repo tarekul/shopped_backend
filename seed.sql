@@ -114,4 +114,9 @@ INSERT INTO cartItem (cart_id,prod_id,quantity) VALUES
 INSERT INTO cartItem (cart_id,prod_id,quantity) VALUES 
 (1,2,5);
 
+INSERT INTO orders (userid,purchased) VALUES 
+(2,{});
+
+
+
 
