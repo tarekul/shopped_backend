@@ -1,7 +1,6 @@
 DROP TABLE IF EXISTS comments CASCADE;
 DROP TABLE IF EXISTS cartItem CASCADE;
 DROP TABLE IF EXISTS cart CASCADE;
-
 DROP TABLE IF EXISTS shop CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
@@ -95,9 +94,9 @@ CREATE TABLE comments (
 
 
 
-INSERT INTO users (username,name,email) VALUES 
-('tarek123','tarek','tarek123@gmail.com'),
-('brian123','brian','brian123@gmail.com');
+INSERT INTO users (username,name,email,uid) VALUES 
+('tarek123','tarek','tarek123@gmail.com','dummyid'),
+('brian123','brian','brian123@gmail.com','dummyid');
 
 INSERT INTO shop (sellerid,shop_name,description,img_shop) VALUES 
 (1,'shopped','amazon clone','shop_url');
@@ -116,7 +115,7 @@ INSERT INTO cartItem (cart_id,prod_id,quantity) VALUES
 (1,2,5);
 
 INSERT INTO orders (userid,purchased) VALUES 
-(2,{});
+(2,'{}');
 
 
 

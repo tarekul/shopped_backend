@@ -91,9 +91,9 @@ CREATE TABLE comments (
 
 
 
-INSERT INTO users (username,name,email) VALUES 
-('tarek123','tarek','tarek123@gmail.com'),
-('brian123','brian','brian123@gmail.com');
+INSERT INTO users (username,name,email,uid) VALUES 
+('tarek123','tarek','tarek123@gmail.com','dummy id'),
+('brian123','brian','brian123@gmail.com','dummy id');
 
 INSERT INTO shop (sellerid,shop_name,description,img_shop) VALUES 
 (1,'shopped','amazon clone','shop_url');
