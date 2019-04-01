@@ -15,7 +15,7 @@ userRouter.get('/:userid',(req,res)=>{
     })
 })
 
-userRouter.get('/:email',(req,res)=>{
+userRouter.get('/:email/email',(req,res)=>{
     const {email} = req.params
     return userService.readUserWemail(email)
     .then(response=>{
