@@ -14,6 +14,17 @@ userRouter.get('/:userid',(req,res)=>{
         res.json({err})
     })
 })
+
+userRouter.get('/:email',(req,res)=>{
+    const {email} = req.params
+    return userService.readUserWemail(email)
+    .then(response=>{
+        res.json(response)
+    })
+    .catch(err=>{
+        res.json({err})
+    })
+})
     
 
 //post to users table new user

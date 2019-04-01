@@ -12,6 +12,10 @@ userService.readUserId = (username) =>{
     return db.one('SELECT * FROM users WHERE username=${username}',{username})
 }
 
+userService.readUserWemail = email =>{
+    return db.one('SELECT * FROM users WHERE email=${email}',{email})
+}
+
 userService.createUser = (username,name,img,email,address,uid) =>{
     return db.none('INSERT INTO users (username,name,img,email,address,uid) VALUES (${username},${name},${img},${email},${address},${uid})',{username,name,img,email,address,uid})
 }
