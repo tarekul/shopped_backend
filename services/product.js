@@ -5,10 +5,10 @@ const productService = {}
 productService.getAllProducts = () =>{
     return db.any('SELECT DISTINCT category FROM products')
             .then(response=>{
-                response.forEach(element => {
+                return Promise.all(response.map(element => {
                     const category = element.category
                     return db.any('SELECT * FROM products WHERE category=${category} ORDER BY itemsOrdered LIMIT 5',{category})
-                });
+                }));
             })
 }
 
