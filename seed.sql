@@ -104,6 +104,11 @@ INSERT INTO shop (sellerid,shop_name,description,img_shop) VALUES
 
 INSERT INTO products (shop_id,prod_name,price,category,itemsOrdered) VALUES 
 (1,'iPad',499,'tech',3),
+(1,'macbook',1299,'tech',5),
+(1,'iphone',999,'tech',1),
+(1,'yoga 720',1199,'tech',10),
+(1,'Surface Pro',1299,'tech',11),
+(1,'Samsung S9',599,'tech',15),
 (1,'washing machine',800,'appliance',4);
 
 INSERT INTO cart (userid) VALUES 

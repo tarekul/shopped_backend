@@ -7,7 +7,7 @@ productService.getAllProducts = () =>{
             .then(response=>{
                 return Promise.all(response.map(element => {
                     const category = element.category
-                    return db.any('SELECT * FROM products WHERE category=${category} ORDER BY itemsOrdered LIMIT 5',{category})
+                    return db.any('SELECT * FROM products WHERE category=${category} ORDER BY itemsOrdered DESC LIMIT 5',{category})
                 }));
             })
 }
