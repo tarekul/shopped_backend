@@ -38,7 +38,8 @@ CREATE TABLE products (
   price NUMERIC NOT NULL,
   category VARCHAR (100) NOT NULL,
   ratings INT NULL,
-  size JSON NULL
+  size JSON NULL,
+  itemsOrdered INT NULL
 );
 
 CREATE TABLE cart (

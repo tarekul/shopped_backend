@@ -14,6 +14,16 @@ productRouter.get('/:prod_id',(req,res)=>{
     })
 })
 
+productRouter.get('/',(req,res)=>{
+    productService.getAllProducts()
+    .then(response=>{
+        res.json(response)
+    })
+    .catch(err=>{
+        res.json(err)
+    })
+})
+
 productRouter.get('/:prod_id/shop',(req,res)=>{
     const {prod_id} = req.params
     productService.readProductShop(prod_id)
