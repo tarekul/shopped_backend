@@ -6,7 +6,8 @@ productService.getAllProducts = () =>{
     return db.any('SELECT DISTINCT category FROM products')
             .then(response=>{
                 response.forEach(element => {
-                    return db.any('SELECT * FROM products WHERE category=${element} ORDER BY itemsOrdered LIMIT 5',{element})
+                    const category = element.category
+                    return db.any('SELECT * FROM products WHERE category=${category} ORDER BY itemsOrdered LIMIT 5',{category})
                 });
             })
 }
