@@ -3,7 +3,7 @@ const {createSqlCommandForUpdate2} = require('../services/helper')
 const productService = {}
 
 productService.getAllProducts = () =>{
-    return db.any('SELECT * FROM products')
+    return db.any('SELECT DISTINCT categories FROM products')
 }
 
 productService.readProduct = (prod_id) =>{
