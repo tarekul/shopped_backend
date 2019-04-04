@@ -102,9 +102,9 @@ INSERT INTO users (username,name,email,uid) VALUES
 INSERT INTO shop (sellerid,shop_name,description,img_shop) VALUES 
 (1,'shopped','amazon clone','shop_url');
 
-INSERT INTO products (shop_id,prod_name,price,category) VALUES 
-(1,'iPad',499,'tech'),
-(1,'macbook',1499,'tech');
+INSERT INTO products (shop_id,prod_name,price,category,itemsOrdered) VALUES 
+(1,'iPad',499,'tech',3),
+(1,'washing machine',800,'appliance',4);
 
 INSERT INTO cart (userid) VALUES 
 (2);
