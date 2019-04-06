@@ -29,8 +29,8 @@ userRouter.get('/:email/email',(req,res)=>{
 
 //post to users table new user
 userRouter.post('/',(req,res)=>{
-    const {username,name,img,email,address,uid} = req.body
-    return userService.createUser(username,name,img,email,address,uid)
+    const {username,name,img,email,address,uid,seller} = req.body
+    return userService.createUser(username,name,img,email,address,uid,seller)
     .then(response =>{
         return userService.readUserId(username)
     })
@@ -45,9 +45,9 @@ userRouter.post('/',(req,res)=>{
 
 userRouter.put('/:userid',(req,res)=>{
     const {userid} = req.params
-    const {username,name,img,email,address} = req.body
+    const {username,name,img,email,address,seller} = req.body
     console.log(username,name,img,email,address)
-    return userService.updateUser(userid,username,name,img,email,address)
+    return userService.updateUser(userid,username,name,img,email,address,seller)
     .then((response)=>{
        return userService.readUser(userid)
     })

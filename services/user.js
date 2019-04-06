@@ -16,15 +16,15 @@ userService.readUserWemail = email =>{
     return db.one('SELECT * FROM users WHERE email=${email}',{email})
 }
 
-userService.createUser = (username,name,img,email,address,uid) =>{
-    return db.none('INSERT INTO users (username,name,img,email,address,uid) VALUES (${username},${name},${img},${email},${address},${uid})',{username,name,img,email,address,uid})
+userService.createUser = (username,name,img,email,address,uid,seller) =>{
+    return db.none('INSERT INTO users (username,name,img,email,address,uid,seller) VALUES (${username},${name},${img},${email},${address},${uid},${seller})',{username,name,img,email,address,uid,seller})
 }
 
-userService.updateUser = (userid,username,name,img,email,address) =>{
-    const arr = [username,name,img,email,address]
+userService.updateUser = (userid,username,name,img,email,address,seller) =>{
+    const arr = [username,name,img,email,address,seller]
 
-    const arrString = ["username","name","img","email","address"]
-    return db.none(createSqlCommandForUpdate2(arr,arrString,'users','userid'),{userid,username,name,img,email,address})
+    const arrString = ["username","name","img","email","address","seller"]
+    return db.none(createSqlCommandForUpdate2(arr,arrString,'users','userid'),{userid,username,name,img,email,address,seller})
     // return db.none(
     //     `UPDATE users SET
     //         name = $[name]

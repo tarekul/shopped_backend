@@ -14,6 +14,7 @@ CREATE TABLE users (
   email VARCHAR  UNIQUE NOT NULL,
   address JSON NULL,
   uid VARCHAR NOT NULL,
+  seller VARCHAR NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -95,9 +96,9 @@ CREATE TABLE comments (
 
 
 
-INSERT INTO users (username,name,email,uid) VALUES 
-('tarek123','tarek','tarek123@gmail.com','dummyid'),
-('brian123','brian','brian123@gmail.com','dummyid');
+INSERT INTO users (username,name,email,uid,seller) VALUES 
+('tarek123','tarek','tarek123@gmail.com','dummyid','true'),
+('brian123','brian','brian123@gmail.com','dummyid','false');
 
 INSERT INTO shop (sellerid,shop_name,description,img_shop) VALUES 
 (1,'shopped','amazon clone','shop_url');
