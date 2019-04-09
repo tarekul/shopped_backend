@@ -1,5 +1,6 @@
 const express = require('express')
 const shopRouter = express.Router();
+import admin from '../firebase'
 
 const {shopService} = require('../services/shop')
 
@@ -25,8 +26,15 @@ shopRouter.get('/:shop_id/products',(req,res)=>{
     })
 })
 
-shopRouter.post('/',(req,res)=>{
+const idk = (req,res,next) =>{
+    console.log(req.headers.token)
+    next()
+}
+shopRouter.post('/',idk,(req,res)=>{
     const {sellerid,shop_name,description,img_shop} = req.body
+    const {token} = req.headers
+    console.log('shopname',shop_name)
+    // console.log('token', token)
     //console.log(sellerid,shop_id,description,img_shop)
     shopService.createShop(sellerid,shop_name,description,img_shop)
     .then(() =>{
