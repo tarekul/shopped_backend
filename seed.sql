@@ -64,7 +64,8 @@ CREATE TABLE cartItem (
     FOREIGN KEY (prod_id)
     REFERENCES products(prod_id)
     ON DELETE CASCADE,
-  quantity INT NOT NULL
+  quantity INT NOT NULL,
+  size VARCHAR NULL
 );
 
 CREATE TABLE orders (

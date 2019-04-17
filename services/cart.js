@@ -20,14 +20,14 @@ cartService.readCartItem = (cartitem_id) =>{
     return db.one('SELECT * FROM cartItem WHERE cartitem_id=${cartitem_id}',{cartitem_id}) 
 }
 
-cartService.createCart = (userid,prod_id,quantity) =>{
+cartService.createCart = (userid,prod_id,quantity,size) =>{
     return db.none('INSERT INTO cart (userid) VALUES (${userid})',{userid})
     .then(()=>{
         return cartService.readCart(userid)
     })
     .then((response)=>{
         const cart_id = response.cart_id
-        return db.none('INSERT INTO cartItem (cart_id,prod_id,quantity) VALUES (${cart_id},${prod_id},${quantity})',{cart_id,prod_id,quantity})
+        return db.none('INSERT INTO cartItem (cart_id,prod_id,quantity,size) VALUES (${cart_id},${prod_id},${quantity},${size})',{cart_id,prod_id,quantity,size})
     })
     
     

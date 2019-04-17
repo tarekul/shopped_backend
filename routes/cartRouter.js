@@ -20,8 +20,8 @@ cartRouter.get('/:userid',(req,res)=>{
 
 //post to users table new user
 cartRouter.post('/',(req,res)=>{
-    const {userid,prod_id,quantity} = req.body
-    return cartService.createCart(userid,prod_id,quantity)
+    const {userid,prod_id,quantity,size} = req.body
+    return cartService.createCart(userid,prod_id,quantity,size)
     .then(response =>{
         return cartService.readCart(userid)
     })
