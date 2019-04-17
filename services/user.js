@@ -22,7 +22,7 @@ userService.createUser = (username,name,img,email,address,uid,seller) =>{
 
 userService.updateUser = (userid,username,name,img,email,address,seller) =>{
     const arr = [username,name,img,email,address,seller]
-
+    console.log('seller here',seller)
     const arrString = ["username","name","img","email","address","seller"]
     return db.none(createSqlCommandForUpdate2(arr,arrString,'users','userid'),{userid,username,name,img,email,address,seller})
     // return db.none(

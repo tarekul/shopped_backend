@@ -7,11 +7,15 @@ shopService.readShop = (shop_id) =>{
     return db.one('SELECT * FROM shop WHERE shop_id=${shop_id}',{shop_id}) 
 }
 
+shopService.readShopWSellerId = seller_id =>{
+    return db.one('SELECT * FROM shop WHERE sellerid=${seller_id}',{seller_id})
+}
 shopService.checkifuserIsSeller = sellerid =>{
     return db.one('SELECT * FROM shop WHERE sellerid=${sellerid}',{sellerid})
     .then(response=> true)
     .catch(err=>false)
 }
+
 
 shopService.readShopProducts = (shop_id) =>{
     return db.any('SELECT * FROM shop LEFT JOIN products ON shop.shop_id=${shop_id} AND products.shop_id=${shop_id}',{shop_id}) 

@@ -46,9 +46,8 @@ userRouter.post('/',(req,res)=>{
 userRouter.put('/:userid',(req,res)=>{
     const {userid} = req.params
     const {username,name,img,email,address,seller} = req.body
-    console.log(username,name,img,email,address)
     return userService.updateUser(userid,username,name,img,email,address,seller)
-    .then((response)=>{
+    .then(()=>{
        return userService.readUser(userid)
     })
     .then(response=>res.send(response))

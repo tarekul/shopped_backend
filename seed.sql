@@ -38,7 +38,7 @@ CREATE TABLE products (
     ON DELETE CASCADE,
   prod_name VARCHAR NOT NULL,
   description VARCHAR,
-  imgs JSON NULL,
+  img VARCHAR NULL,
   price NUMERIC NOT NULL,
   category VARCHAR (100) NOT NULL,
   ratings INT NULL,

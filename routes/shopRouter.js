@@ -1,12 +1,34 @@
 const express = require('express')
 const shopRouter = express.Router();
-import admin from '../firebase'
-
+const {verify} = require('../services/middleware')
 const {shopService} = require('../services/shop')
+
 
 shopRouter.get('/:shop_id',(req,res)=>{
     const {shop_id} = req.params
     shopService.readShop(shop_id)
+    .then(response=>{
+        res.json(response)
+    })
+    .catch(err=>{
+        res.json(err)
+    })
+})
+
+shopRouter.get('/:shop_name/shop_name',(req,res)=>{
+    const {shop_name} = req.params
+    shopService.readShopWshopname(shop_name)
+    .then(response=>{
+        res.json(response)
+    })
+    .catch(err=>{
+        res.json(err)
+    })
+})
+
+shopRouter.get('/:seller_id/seller',(req,res)=>{
+    const {seller_id} = req.params
+    shopService.readShopWSellerId(seller_id)
     .then(response=>{
         res.json(response)
     })
@@ -26,16 +48,12 @@ shopRouter.get('/:shop_id/products',(req,res)=>{
     })
 })
 
-const idk = (req,res,next) =>{
-    console.log(req.headers.token)
-    next()
-}
-shopRouter.post('/',idk,(req,res)=>{
+
+shopRouter.post('/',verify,(req,res)=>{
     const {sellerid,shop_name,description,img_shop} = req.body
-    const {token} = req.headers
+    
     console.log('shopname',shop_name)
-    // console.log('token', token)
-    //console.log(sellerid,shop_id,description,img_shop)
+
     shopService.createShop(sellerid,shop_name,description,img_shop)
     .then(() =>{
         return shopService.readShopWshopname(shop_name)

@@ -35,7 +35,7 @@ CREATE TABLE products (
     ON DELETE CASCADE,
   prod_name VARCHAR NOT NULL,
   description VARCHAR,
-  imgs JSON NULL,
+  img VARCHAR NULL,
   price NUMERIC NOT NULL,
   category VARCHAR (100) NOT NULL,
   ratings INT NULL,
@@ -93,16 +93,21 @@ CREATE TABLE comments (
 
 
 
-INSERT INTO users (username,name,email,uid) VALUES 
-('tarek123','tarek','tarek123@gmail.com','dummy id'),
-('brian123','brian','brian123@gmail.com','dummy id');
+INSERT INTO users (username,name,email,uid,seller) VALUES 
+('tarek123','tarek','tarek123@gmail.com','dummyid',true),
+('brian123','brian','brian123@gmail.com','dummyid',false);
 
 INSERT INTO shop (sellerid,shop_name,description,img_shop) VALUES 
 (1,'shopped','amazon clone','shop_url');
 
-INSERT INTO products (shop_id,prod_name,price,category) VALUES 
-(1,'iPad',499,'tech'),
-(1,'macbook',1499,'tech');
+INSERT INTO products (shop_id,prod_name,price,category,itemsOrdered) VALUES 
+(1,'iPad',499,'tech',3),
+(1,'macbook',1299,'tech',5),
+(1,'iphone',999,'tech',1),
+(1,'yoga 720',1199,'tech',10),
+(1,'Surface Pro',1299,'tech',11),
+(1,'Samsung S9',599,'tech',15),
+(1,'washing machine',800,'appliance',4);
 
 INSERT INTO cart (userid) VALUES 
 (2);
@@ -112,5 +117,10 @@ INSERT INTO cartItem (cart_id,prod_id,quantity) VALUES
 
 INSERT INTO cartItem (cart_id,prod_id,quantity) VALUES 
 (1,2,5);
+
+INSERT INTO orders (userid,purchased) VALUES 
+(2,'{"yes":"lol"}');
+
+
 
 

@@ -2,6 +2,7 @@ const express = require('express')
 const productRouter = express.Router();
 
 const {productService} = require('../services/product')
+const {verify} = require('../services/middleware')
 
 productRouter.get('/:prod_id',(req,res)=>{
     const {prod_id} = req.params
@@ -47,20 +48,23 @@ productRouter.get('/:prod_id/shop',(req,res)=>{
 // })
 
 
-productRouter.post('/',(req,res)=>{
-    const {shop_id,prod_name,description,price,category,ratings,size} = req.body
-    productService.readProductWName(prod_name,shop_id)
-    .then((response)=>{
-        throw new Error("Product already exists")
-    },()=>{
-        return productService.createProduct(shop_id,prod_name,description,price,category,ratings,size)
-    })
-    .then(() =>{
-        return productService.readProductWName(prod_name,shop_id)
-    })
+productRouter.post('/',verify,(req,res)=>{
+    const {shop_id,prod_name,description,price,category,ratings,size,img} = req.body
+    console.log('here at product post route')
+    console.log(shop_id)
+    // productService.readProductWName(prod_name,shop_id)
+    // .then((response)=>{
+    //     throw new Error("Product already exists")
+    // },()=>{
+    //     return productService.createProduct(shop_id,prod_name,description,price,category,ratings,size,img)
+    // })
+    productService.createProduct(shop_id,prod_name,description,price,category,ratings,size,img)
+    // .then(() =>{
+    //     return productService.readProductWName(prod_name,shop_id)
+    // })
     .then(response=>res.send(response))
     .catch(err=>{
-        res.send('product already exists')
+        res.send(err.toString(),'product already exists')
     })
 })
 

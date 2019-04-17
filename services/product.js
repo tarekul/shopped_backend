@@ -29,8 +29,9 @@ productService.readProductShop = (prod_id) =>{
 //     return db.one('SELECT FROM products WHERE prod_name=${prod_name} AND shop_name=${shop_name}',{prod_name,shop_name})
 // }
 
-productService.createProduct = (shop_id,prod_name,description,price,category,ratings,size) =>{
-    return db.none('INSERT INTO products (shop_id,prod_name,description,price,category,ratings,size) VALUES (${shop_id},${prod_name},${description},${price},${category},${ratings},${size})',{shop_id,prod_name,description,price,category,ratings,size}) 
+productService.createProduct = (shop_id,prod_name,description,price,category,ratings,size,img) =>{
+     console.log('size',size)
+    return db.none('INSERT INTO products (shop_id,prod_name,description,price,category,ratings,size,img) VALUES (${shop_id},${prod_name},${description},${price},${category},${ratings},${size},${img})',{shop_id,prod_name,description,price,category,ratings,size,img}) 
 }
 
 productService.updateProduct = (prod_id,prod_name,description,price,category,ratings,size) =>{
