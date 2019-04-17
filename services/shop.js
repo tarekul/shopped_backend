@@ -18,7 +18,7 @@ shopService.checkifuserIsSeller = sellerid =>{
 
 
 shopService.readShopProducts = (shop_id) =>{
-    return db.any('SELECT * FROM shop LEFT JOIN products ON shop.shop_id=${shop_id} AND products.shop_id=${shop_id}',{shop_id}) 
+    return db.any('SELECT * FROM shop JOIN products ON shop.shop_id=${shop_id} AND products.shop_id=${shop_id}',{shop_id}) 
 }
 
 shopService.readShopWshopname = shop_name =>{
