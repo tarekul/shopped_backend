@@ -7,9 +7,8 @@ const verify = (req,res,next) =>{
     const {sellerid} = req.body
     
     const uid = admin.auth().verifyIdToken(token)
-        
-        .then(decodedToken => decodedToken.uid)
-        .catch(function(error) {});
+    .then(decodedToken => decodedToken.uid)
+    .catch(function(error) {});
 
     const readUser = userService.readUser(sellerid)
 

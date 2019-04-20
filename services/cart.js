@@ -21,12 +21,9 @@ cartService.readCartItem = (cartitem_id) =>{
 }
 
 cartService.createCart = (userid,prod_id,quantity,size) =>{
-    return db.none('INSERT INTO cart (userid) VALUES (${userid})',{userid})
-    .then(()=>{
-        return cartService.readCart(userid)
-    })
-    .then((response)=>{
-        const cart_id = response.cart_id
+    return db.one('INSERT INTO cart (userid) VALUES (${userid}) RETURNING cart_id',{userid})
+    .then(response=>{
+        const {cart_id} = response
         return db.none('INSERT INTO cartItem (cart_id,prod_id,quantity,size) VALUES (${cart_id},${prod_id},${quantity},${size})',{cart_id,prod_id,quantity,size})
     })
     
